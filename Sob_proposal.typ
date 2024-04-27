@@ -1,5 +1,17 @@
 #show link: underline
+#set page(numbering: "1")
 
+== Concepts Preview <concepts-preview>
+The proposal is about changing the async runtime from `async-std` to `tokio` in the Floresta project. The project is a fully-validating Bitcoin node in Rust. The change is proposed by the lead developer and maintainer of the project, Davidson Souza. The main goal is to improve performance and enhance features that `async-std` cannot provide. Here some bullet points about the concepts that will be used in the proposal:
+=== Rust
+Rust is a programming language focused on memory safety and performance.
+Its `Async` features was developed to be in the standard library but the `Runtime` was outsourced to the community.
+=== Async and Runtime
+Async is a programming paradigm that allows the execution of tasks concurrently. In Rust, to use Async, a `Runtime` is needed to manage the tasks.
+=== Tokio and Async-std
+`Tokio` and `Async-std` are two of the most used `Runtimes` in Rust. They provide the necessary tools to manage async tasks. But `Async-std` is not as performant as `Tokio` and can be considered a bit of deprecated.
+
+If remains any doubt about the concepts, go to the #link(<good-to-read-fonts>)[Good to read] section.
 
 == Focus of Proposal <focus-of-proposal>
 
@@ -91,7 +103,7 @@ trait Asyncfunctions {
     async fn task<F, T>(&self,t: F) -> T where  F: Future<Output = T> + Send + 'static,
     T: Send + 'static;
 }
-struct Stdeisync;
+struct StdAsync;
 
 struct TokioRuntime;
 
@@ -101,7 +113,7 @@ impl Asyncfunctions for TokioRuntime{
         tokio_spawn(t).await.unwrap()
     }
 }
-impl Asyncfunctions for Stdeisync{
+impl Asyncfunctions for StdAsync{
     async fn task<F, T>(&self,t: F) -> T where  F: Future<Output = T> + Send + 'static,
     T: Send + 'static{
         std_task::spawn(t).await
@@ -123,7 +135,7 @@ async fn agnostic_function<F: Asyncfunctions> (runtime: F) -> Result<()> {
 async fn main() {
 
     println!("print one billion using Async-std funtions:");
-    let _ =  agnostic_function(Stdeisync);
+    let _ =  agnostic_function(StdAsync);
     println!("print one billion using tokio functions:");
     let _ =  agnostic_function(TokioRuntime).await;
 
@@ -151,7 +163,7 @@ cargo build --features "tokio-runtime"
 and using types in Rust
 ```rust
 #[cfg(feature = "async-std-runtime")]
-type Runtime = Stdeisync;
+type Runtime = StdAsync;
 
 #[cfg(feature = "tokio-runtime")]
 type Runtime = TokioRuntime;
@@ -178,13 +190,39 @@ With this technique of "Agnostic Runtime" the Floresta node can fit or can easil
  
 Depending on Mentor's will or ideas, the Agnostic Runtime code design and technique can be changed before the implementation.
 
+Time expectation to implementation: #strong[\( 1 - 2 weeks).]
+
 == Code versioning planning <code-versioning-planning>
+
+Code Versioning can help to decrease the implementation time and prevent errors since a good definition of the work objetives.
+#figure(
+  grid(
+      columns: 2,     // 2 means 2 auto-sized columns
+      figure(
+        image("Versioning_without_agnostic.svg", width: 54%),
+        caption: [ Versioning representation without Agnostic runtime.],
+      ),
+      figure(
+        image("Versioning_with_agnostic.svg", width: 60%),
+        caption: [ Versioning representation with Agnostic runtime. ],
+      )
+  ),
+)
+
+As represented in the images above, the agnostic modularization can start beeing implemented since the beginning of the work in the project.
+
+
+
 == Good to read (fonts): <good-to-read-fonts>
+#link("https://doc.rust-lang.org/book/")[The Rust Programming Language]
+
+#link("https://en.wikipedia.org/wiki/Runtime_system")[Runtime at Wikipedia]
+
 #link("https://async.rs/")[Async-std]
 
 #link("https://tokio.rs/Async")[Tokio]
 
-#link("https://github.com/smol-rs/smol")[smol-rs]
+#link("https://github.com/smol-rs/smol")[smol-rs at Github]
 
 #link(
   "https://www.youtube.com/watch?v=w1vKAUor-4o",
@@ -197,3 +235,4 @@ Depending on Mentor's will or ideas, the Agnostic Runtime code design and techni
 #link(
   "https://github.com/Davidson-Souza/Floresta/issues/144",
 )[\#144 \[SoB\]: Move Async-std to Tokio]
+
