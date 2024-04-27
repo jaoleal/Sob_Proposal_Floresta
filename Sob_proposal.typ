@@ -1,6 +1,6 @@
 #show link: underline
 #set page(numbering: "1")
-
+= Floresta: Move Async-std to Tokio <proposal>
 == Concepts Preview <concepts-preview>
 The proposal is about changing the async runtime from `async-std` to `tokio` in the Floresta project. The project is a fully-validating Bitcoin node in Rust. The change is proposed by the lead developer and maintainer of the project, Davidson Souza. The main goal is to improve performance and enhance features that `async-std` cannot provide. Here some bullet points about the concepts that will be used in the proposal:
 === Rust
@@ -23,7 +23,7 @@ Potential advantages are performance improvements and enhanced features from `to
 
 The "crates" that will be affected by this proposal:
 
-- `florestad` <florestad>: // these <FOO> are references
+=== `florestad` <florestad>
   located at `/florestad`.
 
 The Floresta node itself uses `async` operations to resolve  shutdown calls,
@@ -32,7 +32,7 @@ communicate with the Electrum server and I/O functions.
 - Notable used `async-std` features:
   - `sync::{Rwlock, Block_on}`
 
-- `floresta-electrum`  <floresta-electrum>:
+=== `floresta-electrum`  <floresta-electrum>
   located at `/crates/floresta-electrum`.
 
 An Electrum server adapted to floresta node exposing a proper API to communicate with Electrum wavkvllets.
@@ -45,10 +45,8 @@ Async presence is used to provide Tcp connections, message based channels betwee
     - `sync::{Rwlock}`
     - `task::{spawn}`
 
-// Fiz ate AQUI mas voce entedeu a idea
-// veja https://typst.app/docs/
 
-- == Floresta-wire <floresta-wire>
+=== `floresta-wire` <floresta-wire>
   Located at `/crates/floresta-wire`.
 
 Api to find and discover new blocks that have p2p protocol and utreexod’s JSON-rpc implemented. Async feature is heavily used on p2p communication.
