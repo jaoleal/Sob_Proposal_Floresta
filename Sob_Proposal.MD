@@ -6,34 +6,34 @@ The “crates” that will be affected by this proposal:
 
 * ### florestad 
 
-    Located at `/florestad`.
+Located at `/florestad`.
 
-    The Floresta node itself uses Async to resolve shutdown calls, communicate with the Electrum server and I/O functions.
-		
-    * Notable used Async-std features:
-        - sync ::{Rwlock, Block_on}
+The Floresta node itself uses Async to resolve shutdown calls, communicate with the Electrum server and I/O functions.
+    
+* Notable used Async-std features:
+    - sync ::{Rwlock, Block_on}
 
 * ### Floresta-electrum
 Located at `/crates/floresta-electrum`.
 
-    A Electrum server adapted to floresta node exposing a proper API to communicate with Electrum wallets. Async presence is used to provide Tcp connections, message based channels between tasks and I/O functions.
-		
-	* Notable used Async-std features:
-        - Channel::{ unbounded, Receiver, Sender}
-        - io:: {BufReader}
-        - net:: {TcpListener, TcpStream, ToSocketAddrs}
-        - sync:: {Rwlock}
-        - task::{spawn}
+A Electrum server adapted to floresta node exposing a proper API to communicate with Electrum wallets. Async presence is used to provide Tcp connections, message based channels between tasks and I/O functions.
+    
+* Notable used Async-std features:
+    - Channel::{ unbounded, Receiver, Sender}
+    - io:: {BufReader}
+    - net:: {TcpListener, TcpStream, ToSocketAddrs}
+    - sync:: {Rwlock}
+    - task::{spawn}
 
 * ### Floresta-wire
 Located at `/crates/floresta-wire`.
     
-    Api to find and discover new blocks that have p2p protocol and utreexod’s JSON-rpc implemented. Async feature is heavily used on p2p communication.
+Api to find and discover new blocks that have p2p protocol and utreexod’s JSON-rpc implemented. Async feature is heavily used on p2p communication.
 
-    * Notable used Async-std features:
-        - sync::{RwLock}
-        - Channel::{bounded, receiver, sender, sendError}
-        - net::{TcpStream}
+* Notable used Async-std features:
+    - sync::{RwLock}
+    - Channel::{bounded, receiver, sender, sendError}
+    - net::{TcpStream}
 
 Regarding the use of asynchronous, the future trait is used in the mentioned crates to manage an asynchronous approach to some tasks, even not being inherited directly from the Async-std Its outsourcing to Tokio can be evaluated since the discovery of a different approach to use Tokio that can reward more performance and trust in its execution.
 
