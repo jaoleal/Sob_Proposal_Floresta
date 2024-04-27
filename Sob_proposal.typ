@@ -1,5 +1,6 @@
 #show link: underline
 
+
 == Focus of Proposal <focus-of-proposal>
 
 As proposed by #link("https://github.com/Davidson-Souza")[Davidson Souza],
@@ -67,7 +68,7 @@ The next steps covers the main purpose of the proposal, extras and possibilities
 
 + Florestad async functionalities dependencies from Async-std to Tokio. #strong[\(8 - 12 days).]
 
-The estimated work time may vary depending on problems encountered during the execution of the proposal even if, in this document, defined for organized work, properly documented, Error handling and covering possible errors.
+The estimated work time may vary depending on problems encountered during the execution of the proposal even if, in this document, defined for organized work, properly documented, Error handling and covering possible errors. Considering that the start of the work in the Floresta's project would begin at 15 May 2024 and is safely expected by the midlle/end of july 2024.
 
 == After Party <after-party>
 After the sucessfull integration of Tokio, the good pratices in code versioning (see #link(<code-versioning-planning>)[code versioning planning]) can introduce us to an opportunity to integrate a good feature to Floresta portability, #link(<agnostic-runtime>)[Agnostic Runtime].
@@ -129,17 +130,53 @@ async fn main() {
 }
 ```
 
-See that in `agnostic_function()` we can use the the [Dependency injetcion](https://en.wikipedia.org/wiki/Dependency_injection) technique to make async funtions use the library that we want to henrerit the funcions, in this case, `Async-std` and `Tokio` are used. both functions work as expected using eachother runtime just printing:
+See that in `agnostic_function()` we can use the the #link("https://en.wikipedia.org/wiki/Dependency_injection")[Dependency injection] technique to make async funtions use the library that we want to henrerit the funcions, in this case, `Async-std` and `Tokio` are used. both functions work as expected using eachother runtime just printing:
 
 ```shell
 print one billion using Async-std funtions:
 one billion is reached. i:1000000000
-print one billion using tokio functions:
+print one billion using tokio  functions:
 one billion is reached. i:1000000000
 ```
 In the exemple, using Tokio runtime. 
 
-Since the runtime needs to be declared in the code, with cargo features and Rust macros
+Since the runtime needs to be declared in the code and this can be achieved with cargo features and Rust macros to change the desired runtime in the compile time. Example:
+```
+cargo build --features "async-std-runtime"
+```
+or
+```
+cargo build --features "tokio-runtime"
+```
+and using types in Rust
+```rust
+#[cfg(feature = "async-std-runtime")]
+type Runtime = Stdeisync;
+
+#[cfg(feature = "tokio-runtime")]
+type Runtime = TokioRuntime;
+
+```
+
+The idea about "Runtime Agnostic" was mentioned by #link("https://github.com/Davidson-Souza")[Davidson Souza] at the #link("https://www.summerofbitcoin.org/project-ideas-details/floresta/r/recCx3APdQ11FICfZ")[Summer of Bitcoin]
+#set quote(block: true)
+
+#quote(attribution: [Davidson at Floresta's Project Ideas])[
+  "A stretch goal would be making it runtime agnostic, rather than tied to tokio alone."
+]
+
+The code design can be better discussed, but in first idea, the code could rely in modulating the async functions for each crate present in the libFloresta to make better use and reuse of the code.
+
+#figure(
+  image("Floresta-agnostic-Modules(Light).svg", width: 75%),
+  caption: [
+    Before and After the "Agnostic Runtime" implementation in Floresta.
+  ],
+)
+
+With this technique of "Agnostic Runtime" the Floresta node can fit or can easily modified to fit in any device if the "Main runtime" can be a problem. For more "portable" devices, the use of `smol-rs` can be a good fit and will need less work to implement it in the project than if the project was using only `Tokio` or `Async-std`.
+ 
+Depending on Mentor's will or ideas, the Agnostic Runtime code design and technique can be changed before the implementation.
 
 == Code versioning planning <code-versioning-planning>
 == Good to read (fonts): <good-to-read-fonts>
