@@ -148,7 +148,9 @@ one billion is reached. i:1000000000
 print one billion using tokio  functions:
 one billion is reached. i:1000000000
 ```
-In the exemple, using Tokio runtime. 
+In the example, using Tokio runtime. 
+
+Is good to note the Rust feature that this design of code will use, including a `wrapper` function to async functionalities as `traits` and them making structs for the Async libraries that can be called. 
 
 Since the runtime needs to be declared in the code and this can be achieved with cargo features and Rust macros to change the desired runtime in the compile time. Example:
 ```
