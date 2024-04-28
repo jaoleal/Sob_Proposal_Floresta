@@ -215,7 +215,12 @@ As represented in the images above, the agnostic modularization can start beeing
 
 After the success of the proposal work, we'll stand with a more portable and flexible bitcoin project that has the great potential to be the `"Must Use"` bitcoin node for low-end devices, even because the Rust programming language is promising in this backgrounds, and for it enthusiast that love to fingering with the code. The Floresta project attack in the bitcoin most requested feature: The `Adoption`, when evolving the project to be a fit for any device. The Rust community, in general, can make a good use of a future `Floresta-Async`, a possible runtime agnostic rust crate made for Floresta project since the highly mentioned technique is quite reproducible to other projects. To follow the lightweight ideal of Floresta the implementation of `smol-rs`, a lightweight async Rust runtime with permissive license, will bring the project closer to be perfect and a icing on the cake to work with after the conclusion of the proposal.
 
-
+== The Writer
+The writer of this proposal is #link("https://github.com/jaoleal")[João Leal], a Brazilian Science Computer student at his first semester that tries to run out of obvious but never from the simple. The writer became a Rust adopter to learn things using modern and efficient tools. The programming modernity can't be explained without talking about the Bitcoin solution to the global society money problem, and maybe ower best piece of code for ourselves as humans, the poor, the rich, the capitalist, the socialist, the indigenous, the minority and the majority, they are all the same for Bitcoin and Bitcoin is the same for them. If anyhting on this proposal sounds good for you, and you want more of it, you can talk with the writer:
+- Github: #link("https://github.com/jaoleal")[João Leal's Github].
+- Discord: jleall
+- Nacionality: 🇧🇷 Brazilian
+- Timezone: São Paulo - SP (GMT-3) 
 
 == Good to read (fonts): <good-to-read-fonts>
 #link("https://doc.rust-lang.org/book/")[The Rust Programming Language]
@@ -239,5 +244,3 @@ After the success of the proposal work, we'll stand with a more portable and fle
 #link(
   "https://github.com/Davidson-Souza/Floresta/issues/144",
 )[\#144 \[SoB\]: Move Async-std to Tokio]
-
-== Who am I? <who-am-i>
