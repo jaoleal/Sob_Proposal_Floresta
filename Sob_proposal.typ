@@ -83,9 +83,9 @@ The estimated work time may vary depending on problems encountered during the ex
 After the sucessfull integration of Tokio, the good pratices in code versioning (see #link(<code-versioning-planning>)[code versioning planning]) can introduce us to an opportunity to integrate a good feature to Floresta portability, #link(<agnostic-runtime>)[Agnostic Runtime].
 
 === Agnostic runtime <agnostic-runtime>
-Agnostic, outside the context of the religious meaning, can infer something that is "unattached" of another thing. In this project context we can "unattach" the Async runtime that rust outsorced to the community in a trade for just a little boilerplate and some "redesign" in how the async functions works for floresta.
+Agnostic, outside the context of the religious meaning, can infer something that is "unattached" of another thing. In this project context we can "unattach" the Async runtime that rust outsorced to the community in a trade for just a little workaround and some "redesign" in how the async functions works for floresta.
 
-This is a rust example of how things could work:
+This is a rust representation of how things could work:
 
 ```rust
 
