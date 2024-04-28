@@ -69,13 +69,13 @@ To fit Tokio in Floresta some parameters have to be evaluated before the change 
 == Steps Planning <steps-planning>
 The next steps covers the main purpose of the proposal, extras and possibilities that will come with the dependency change will be described and explored at After Party.
 
-+ Floresta-Wire, Floresta-Electrum and Florestad Rust test battery for internal functions and Python test battery for mocking external cases and performance cover, focused on async functionalities. Deeper understanding of the project. #strong[\(1 - 2 weeks).]
++ #strong("Floresta-Wire"), #strong("Floresta-Electrum") and #strong("Florestad") Rust test battery for internal functions and Python test battery for mocking external cases and performance cover, focused on async functionalities. Deeper understanding of the project. #strong[\(1 - 2 weeks).]
 
-+ Floresta-Wire async functionalities dependencies from Async-std to Tokio. #strong[\( 1 - 2 weeks).]
++ #strong("Floresta-Wire") async functionalities dependencies from Async-std to Tokio. #strong[\( 1 - 2 weeks).]
 
-+ Floresta-Electrum async functionalities dependencies from Async-std to Tokio. #strong[\(8 - 12 days).]
++ #strong("Floresta-Electrum") async functionalities dependencies from Async-std to Tokio. #strong[\(8 - 12 days).]
 
-+ Florestad async functionalities dependencies from Async-std to Tokio. #strong[\(8 - 12 days).]
++ #strong("Florestad") async functionalities dependencies from Async-std to Tokio. #strong[\(8 - 12 days).]
 
 The estimated work time may vary depending on problems encountered during the execution of the proposal even if, in this document, defined for organized work, properly documented, Error handling and covering possible errors. Considering that the start of the work in the Floresta's project would begin at 15 May 2024 and is safely expected by the midlle/end of july 2024.
 
