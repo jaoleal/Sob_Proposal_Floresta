@@ -2,7 +2,7 @@
 #set page(numbering: "1")
 = Floresta: Move Async-std to Tokio <proposal>
 == Concepts Preview <concepts-preview>
-The proposal is about changing the async runtime from `async-std` to `tokio` in the Floresta project. The project is a fully-validating Bitcoin node in Rust. The change is proposed by the lead developer and maintainer of the project, Davidson Souza. The main goal is to improve performance and enhance features that `async-std` cannot provide. Here some bullet points about the concepts that will be used in the proposal:
+The proposal is about changing the async runtime from `async-std` to `tokio` in the Floresta project. The project is a fully-validating Bitcoin node in Rust. The change is proposed by the lead developer and maintainer of the project, #link("https://github.com/Davidson-Souza")[Davidson Souza]. The main goal is to improve performance and enhance features that `async-std` at the moment does not provide. Here some information about the concepts that will be used in this proposal:
 === Rust
 Rust is a programming language focused on memory safety and performance.
 Its `Async` features was developed to be in the standard library but the `Runtime` was outsourced to the community.
@@ -48,7 +48,7 @@ Async presence is used to provide Tcp connections, message based channels betwee
 === `floresta-wire` <floresta-wire>
   Located at `/crates/floresta-wire`.
 
-Api to find and discover new blocks that have p2p protocol and utreexod’s JSON-rpc implemented. Async feature is heavily used on p2p communication.
+Api to find and discover new blocks that have p2p protocol and utreexod's JSON-rpc implemented. Async feature is heavily used on p2p communication.
 
 - Notable used Async-std features:
   - sync::{RwLock}
@@ -60,7 +60,7 @@ Regarding the use of asynchronous, the future trait is used in the mentioned cra
 == The Challenge <the-Challenge>
 To fit Tokio in Floresta some parameters have to be evaluated before the change execution.
 
-+ The performance can’t be worse than the alternative that is currently being used. (Async-std)
++ The performance can't be worse than the alternative that is currently being used. (Async-std)
 
 + The code complexity is not supposed to increase. Even if the Tokio implementation needs rewriting, that is probably what will be, the rewriting needs to follow a similar way to deal with tasks that the actual code already has.
 
@@ -138,8 +138,7 @@ async fn main() {
 
 }
 ```
-
-See that in `agnostic_function()` we can use the the #link("https://en.wikipedia.org/wiki/Dependency_injection")[Dependency injection] technique to make functions that need async use just the library that we want to henrerit the async funcions, in this case, `Async-std` and `Tokio` are used. both functions work as expected using eachother runtime just printing:
+See that in `agnostic_function()` we can use #link("https://en.wikipedia.org/wiki/Dependency_injection")[Dependency injection], a technique that allow the use of dependencies as parameters and calling functionalities from that parameters, to make functions that need async use just the library that we want to inherit the async funcions, in this case, `Async-std` and `Tokio` are used. both functions work as expected using eachother runtime just printing:
 
 ```shell
 print one billion using Async-std funtions:
@@ -169,7 +168,7 @@ type Runtime = TokioRuntime;
 
 ```
 
-Note the use of aliases when henreriting async functions from their respective libraries in this way, the compiler knows exactly what to call when building the binary.
+Note the use of aliases when inheriting async functions from their respective libraries in this way, the compiler knows exactly what to call when building the binary.
 
 ```rust
 use async_std::task::{self as std_task};
@@ -185,7 +184,7 @@ The idea about "Runtime Agnostic" was mentioned by #link("https://github.com/Dav
   "A stretch goal would be making it runtime agnostic, rather than tied to tokio alone."
 ]
 
-The code design can be better discussed, but in first idea, the code could rely in modulating the async functions for each crate present in the libFloresta to make better use and reuse of the code.
+The code design can be better discussed, but in first idea, the code could rely in modulating only the used async functions by the #strong("libFloresta") and #strong("florestad") make better use and reuse of the code.
 
 #figure(
   image("Floresta-agnostic-Modules(Light).svg", width: 75%),
@@ -193,6 +192,8 @@ The code design can be better discussed, but in first idea, the code could rely 
     Before and After the "Agnostic Runtime" implementation in Floresta.
   ],
 )
+
+Using modularization to a point that the async functions used by Floresta are all together in a single module can expand the possibilities of features, one of them being the runtime change without taking down the whole Node and can simplify the code in the other modules by just calling the async functions from the module.
 
 With this technique of "Agnostic Runtime" the Floresta node can fit or can easily be modified to fit in any device if the "Main runtime" can be a problem. For more low-end devices and environments with scarce computing resources, the use of `smol-rs` can be a good fit and will need less work to implement it in the project than if the project was using only `Tokio` or `Async-std`.
  
