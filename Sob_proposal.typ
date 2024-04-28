@@ -209,6 +209,10 @@ Code Versioning can help to decrease the implementation time and prevent errors 
 
 As represented in the images above, the agnostic modularization can start beeing implemented since the beginning of the work in the project.
 
+== A Hug for Bitcoin and Rust Community <a-hug-for-bitcoin-and-rust-community>
+
+After the success of the proposal work, we'll stand with a more portable and flexible bitcoin project that has the great potential to be the `"Must Use"` bitcoin node for low-end devices, even because the Rust programming language is promising in this backgrounds, and for it enthusiast that love to fingering with the code. The Floresta project attack in the bitcoin most requested feature: The `Adoption`, when evolving the project to be a fit for any device. The Rust community, in general, can make a good use of a future `Floresta-Async`, a possible runtime agnostic rust crate made for Floresta project since the highly mentioned technique is quite reproducible to other projects. To follow the lightweight ideal of Floresta the implementation of `smol-rs`, a lightweight async Rust runtime with permissive license, will bring the project closer to be perfect and a icing on the cake to work with after the conclusion of the proposal.
+
 
 
 == Good to read (fonts): <good-to-read-fonts>
@@ -234,3 +238,4 @@ As represented in the images above, the agnostic modularization can start beeing
   "https://github.com/Davidson-Souza/Floresta/issues/144",
 )[\#144 \[SoB\]: Move Async-std to Tokio]
 
+== Who am I? <who-am-i>
