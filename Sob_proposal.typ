@@ -11,9 +11,9 @@ Async is a programming paradigm that allows the execution of tasks concurrently.
 === Tokio and Async-std
 `Tokio` and `Async-std` are two of the most used `Runtimes` in Rust. They provide the necessary tools to manage async tasks. But `Async-std` is not as performant as `Tokio` and can be considered a bit of deprecated.
 
-If remains any doubt about the concepts, go to the #link(<good-to-read-fonts>)[Good to read] section.
+If remains any doubt about the concepts, go to the #link(<source-of-information>)[Source of Information] section.
 
-== Focus of Proposal <focus-of-proposal>
+==  First Phase of Proposal <first-phase-of-proposal>
 
 As proposed by #link("https://github.com/Davidson-Souza")[Davidson Souza],
 lead developer and maintainer of #link("https://github.com/Davidson-Souza/Floresta")[`Floresta`], a fully-validating Bitcoin node in Rust,
@@ -45,7 +45,6 @@ Async presence is used to provide Tcp connections, message based channels betwee
     - `sync::{Rwlock}`
     - `task::{spawn}`
 
-
 === `floresta-wire` <floresta-wire>
   Located at `/crates/floresta-wire`.
 
@@ -58,7 +57,7 @@ Api to find and discover new blocks that have p2p protocol and utreexod’s JSON
 
 Regarding the use of asynchronous, the future trait is used in the mentioned crates to manage an asynchronous approach to some tasks, even not being inherited directly from the Async-std Its outsourcing to Tokio can be evaluated since the discovery of a different approach to use Tokio that can reward more performance and trust in its execution.
 
-== The Problematic <the-problematic>
+== The Challenge <the-Challenge>
 To fit Tokio in Floresta some parameters have to be evaluated before the change execution.
 
 + The performance can’t be worse than the alternative that is currently being used. (Async-std)
@@ -80,7 +79,7 @@ The next steps covers the main purpose of the proposal, extras and possibilities
 
 The estimated work time may vary depending on problems encountered during the execution of the proposal even if, in this document, defined for organized work, properly documented, Error handling and covering possible errors. Considering that the start of the work in the Floresta's project would begin at 15 May 2024 and is safely expected by the midlle/end of july 2024.
 
-== After Party <after-party>
+== Second Phase of Proposal <second-phase-of-proposal>
 After the sucessfull integration of Tokio, the good pratices in code versioning (see #link(<code-versioning-planning>)[code versioning planning]) can introduce us to an opportunity to integrate a good feature to Floresta portability, #link(<agnostic-runtime>)[Agnostic Runtime].
 
 === Agnostic runtime <agnostic-runtime>
@@ -140,7 +139,7 @@ async fn main() {
 }
 ```
 
-See that in `agnostic_function()` we can use the the #link("https://en.wikipedia.org/wiki/Dependency_injection")[Dependency injection] technique to make async funtions use the library that we want to henrerit the funcions, in this case, `Async-std` and `Tokio` are used. both functions work as expected using eachother runtime just printing:
+See that in `agnostic_function()` we can use the the #link("https://en.wikipedia.org/wiki/Dependency_injection")[Dependency injection] technique to make functions that need async use just the library that we want to henrerit the async funcions, in this case, `Async-std` and `Tokio` are used. both functions work as expected using eachother runtime just printing:
 
 ```shell
 print one billion using Async-std funtions:
@@ -170,6 +169,15 @@ type Runtime = TokioRuntime;
 
 ```
 
+Note the use of aliases when henreriting async functions from their respective libraries in this way, the compiler knows exactly what to call when building the binary.
+
+```rust
+use async_std::task::{self as std_task};
+use tokio::task::{spawn as tokio_spawn};
+
+```
+Even if the code in question calls both libraries, in a oficial implementation is better zto be more precise and this use of aliases 
+
 The idea about "Runtime Agnostic" was mentioned by #link("https://github.com/Davidson-Souza")[Davidson Souza] at the #link("https://www.summerofbitcoin.org/project-ideas-details/floresta/r/recCx3APdQ11FICfZ")[Summer of Bitcoin]
 #set quote(block: true)
 
@@ -186,18 +194,18 @@ The code design can be better discussed, but in first idea, the code could rely 
   ],
 )
 
-With this technique of "Agnostic Runtime" the Floresta node can fit or can easily modified to fit in any device if the "Main runtime" can be a problem. For more "portable" devices, the use of `smol-rs` can be a good fit and will need less work to implement it in the project than if the project was using only `Tokio` or `Async-std`.
+With this technique of "Agnostic Runtime" the Floresta node can fit or can easily be modified to fit in any device if the "Main runtime" can be a problem. For more low-end devices and environments with scarce computing resources, the use of `smol-rs` can be a good fit and will need less work to implement it in the project than if the project was using only `Tokio` or `Async-std`.
  
 Depending on Mentor's will or ideas, the Agnostic Runtime code design and technique can be changed before the implementation.
 
-Time expectation to implementation: #strong[\( 1 - 2 weeks).]
+Time expectation of implementation: #strong[\( 2 - 3 weeks).]
 
 == Code versioning planning <code-versioning-planning>
 
 Code Versioning can help to decrease the implementation time and prevent errors since a good definition of the work objetives.
 #figure(
   grid(
-      columns: 2,     // 2 means 2 auto-sized columns
+      columns: 2,
       figure(
         image("Versioning_without_agnostic.svg", width: 54%),
         caption: [ Versioning representation without Agnostic runtime.],
@@ -211,18 +219,18 @@ Code Versioning can help to decrease the implementation time and prevent errors 
 
 As represented in the images above, the agnostic modularization can start beeing implemented since the beginning of the work in the project.
 
-== A Hug for Bitcoin and Rust Community <a-hug-for-bitcoin-and-rust-community>
+== A Promising Feature for Bitcoin and Rust Community <a-promising-feature-for-bitcoin-and-rust-community>
 
 After the success of the proposal work, we'll stand with a more portable and flexible bitcoin project that has the great potential to be the `"Must Use"` bitcoin node for low-end devices, even because the Rust programming language is promising in this backgrounds, and for it enthusiast that love to fingering with the code. The Floresta project attack in the bitcoin most requested feature: The `Adoption`, when evolving the project to be a fit for any device. The Rust community, in general, can make a good use of a future `Floresta-Async`, a possible runtime agnostic rust crate made for Floresta project since the highly mentioned technique is quite reproducible to other projects. To follow the lightweight ideal of Floresta the implementation of `smol-rs`, a lightweight async Rust runtime with permissive license, will bring the project closer to be perfect and a icing on the cake to work with after the conclusion of the proposal.
 
 == The Writer
-The writer of this proposal is #link("https://github.com/jaoleal")[João Leal], a Brazilian Science Computer student at his first semester that tries to run out of obvious but never from the simple. The writer became a Rust adopter to learn things using modern and efficient tools. The programming modernity can't be explained without talking about the Bitcoin solution to the global society money problem, and maybe ower best piece of code for ourselves as humans, the poor, the rich, the capitalist, the socialist, the indigenous, the minority and the majority, they are all the same for Bitcoin and Bitcoin is the same for them. If anyhting on this proposal sounds good for you, and you want more of it, you can talk with the writer:
+The writer of this proposal is #link("https://github.com/jaoleal")[João Leal], a Brazilian Science Computer student at his first semester that tries to run out of obvious but never from the simple. The writer became a Rust adopter to learn things using modern and efficient tools. The programming modernity can't be explained without talking about the Bitcoin solution to the global society money problem, and maybe ower best piece of code for ourselves as humans, the poor, the rich, the minority and the majority, they are all the same for Bitcoin and Bitcoin is the same for them. If anyhting on this proposal sounds good for you, and you want more of it, you can talk with the writer:
 - Github: #link("https://github.com/jaoleal")[João Leal's Github].
 - Discord: jleall
 - Nacionality: 🇧🇷 Brazilian
 - Timezone: São Paulo - SP (GMT-3) 
 
-== Good to read (fonts): <good-to-read-fonts>
+== Source of Information: <source-of-information>
 #link("https://doc.rust-lang.org/book/")[The Rust Programming Language]
 
 #link("https://en.wikipedia.org/wiki/Runtime_system")[Runtime at Wikipedia]
@@ -231,16 +239,12 @@ The writer of this proposal is #link("https://github.com/jaoleal")[João Leal], 
 
 #link("https://tokio.rs/Async")[Tokio]
 
+#link("https://en.wikipedia.org/wiki/Dependency_injection")[Dependency injection]
+
 #link("https://github.com/smol-rs/smol")[smol-rs at Github]
 
-#link(
-  "https://www.youtube.com/watch?v=w1vKAUor-4o",
-)[Runtime agsnostic async crates by Zeeshan Ali].
+#link("https://www.youtube.com/watch?v=w1vKAUor-4o")[Runtime agsnostic async crates by Zeeshan Ali].
 
-#link(
-  "https://www.summerofbitcoin.org/project-ideas-details/floresta/r/recCx3APdQ11FICfZ",
-)[Summer of Bitcoin website proposal]
+#link("https://www.summerofbitcoin.org/project-ideas-details/floresta/r/recCx3APdQ11FICfZ")[Summer of Bitcoin website proposal]
 
-#link(
-  "https://github.com/Davidson-Souza/Floresta/issues/144",
-)[\#144 \[SoB\]: Move Async-std to Tokio]
+#link("https://github.com/Davidson-Souza/Floresta/issues/144")[\#144 \[SoB\]: Move Async-std to Tokio]
