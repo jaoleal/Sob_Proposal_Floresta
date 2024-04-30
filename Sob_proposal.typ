@@ -231,6 +231,7 @@ After the success of the proposal work, we'll stand with a more portable and fle
 
 == The Writer
 The writer of this proposal is #link("https://github.com/jaoleal")[João Leal], a Brazilian Science Computer student at his first semester that tries to run out of obvious but never from the simple. The writer became a Rust adopter to learn things using modern and efficient tools. The programming modernity can't be explained without talking about the Bitcoin solution to the global society money problem, and maybe ower best piece of code for ourselves as humans, the poor, the rich, the minority and the majority, they are all the same for Bitcoin and Bitcoin is the same for them. If anyhting on this proposal sounds good for you, and you want more of it, you can talk with the writer:
+- Full name: João Gabriel Leal de Andrade Barbosa
 - E-mail: jgleal\@protonmail.com
 - Github: #link("https://github.com/jaoleal")[João Leal's Github].
 - Discord: jleall
